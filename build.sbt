@@ -1,5 +1,7 @@
 val scalaJSVersion = sys.env.getOrElse("SCALAJS_VERSION", "1.3.0")
 
+transitiveClassifiers in Global := Seq(Artifact.SourceClassifier)
+
 lazy val `scalajs-bundler-linker` =
   project.in(file("scalajs-bundler-linker"))
     .settings(
@@ -94,7 +96,7 @@ inThisBuild(List(
     "-encoding", "UTF-8",
     "-unchecked",
     "-Xlint",
-    "-Yno-adapted-args",
+    //"-Yno-adapted-args",
     "-Ywarn-dead-code",
     "-Ywarn-numeric-widen",
     "-Ywarn-value-discard",

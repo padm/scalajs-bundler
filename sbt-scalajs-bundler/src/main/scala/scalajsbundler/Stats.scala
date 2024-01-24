@@ -1,9 +1,10 @@
 
 package scalajsbundler
 
-import play.api.libs.json._
-import play.api.libs.functional.syntax._
+import play.api.libs.json.*
+import play.api.libs.functional.syntax.*
 import sbt.Logger
+
 import scala.math.max
 import java.io.File
 import java.nio.file.Path
@@ -50,7 +51,7 @@ object Stats {
 
   }
 
-  final case class WebpackError(moduleName: String, message: String, loc: String)
+  final case class WebpackError(moduleName: String, message: String, loc: Option[String])
 
   final case class WebpackWarning(moduleName: String, message: String)
 
@@ -117,7 +118,7 @@ object Stats {
   implicit val errorReads: Reads[WebpackError] = (
     (JsPath \ "moduleName").read[String] and
       (JsPath \ "message").read[String] and
-      (JsPath \ "loc").read[String]
+      (JsPath \ "loc").formatNullable[String]
     )(WebpackError.apply _)
 
   implicit val warningReads: Reads[WebpackWarning] = (
